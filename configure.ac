@@ -709,15 +709,9 @@ AC_ARG_ENABLE(
 	[ac_lib_freetype=auto]
 )
 if test $ac_lib_freetype = auto; then
-	AC_PATH_PROGS(
-		[ac_lib_freetype_config],
-		[${ac_tool_prefix}freetype-config],
-		[],
-		[${ac_lib_freetype_path}]
-	)
-	if test -z $ac_lib_freetype_config; then
-		ac_lib_freetype=no
-	else
+	PKG_CHECK_MODULES([FREETYPE2], [freetype2 >= 2.5], [ac_lib_freetype=yes], [ac_lib_freetype=no])
+
+	if test $ac_lib_freetype = yes; then
 		ac_save_CFLAGS="$CFLAGS"
 		ac_save_LIBS="$LIBS"
 		FREETYPECFLAGS=`$ac_lib_freetype_config $ac_lib_freetype_args --cflags`
@@ -740,15 +734,9 @@ if test $ac_lib_freetype = auto; then
 		LIBS="$ac_save_LIBS"
 	fi
 elif test $ac_lib_freetype = yes; then
-	AC_PATH_PROGS(
-		[ac_lib_freetype_config],
-		[${ac_tool_prefix}freetype-config],
-		[],
-		[${ac_lib_freetype_path}]
-	)
-	if test -z $ac_lib_freetype_config ; then
-		AC_MSG_ERROR([the ${ac_tool_prefix}freetype-config tool is missing])
-	else
+	PKG_CHECK_MODULES([FREETYPE2], [freetype2 >= 2.5], [ac_lib_freetype=yes], [ac_lib_freetype=no])
+
+	if test $ac_lib_freetype = yes; then
 		ac_save_CFLAGS="$CFLAGS"
 		ac_save_LIBS="$LIBS"
 		FREETYPECFLAGS=`$ac_lib_freetype_config $ac_lib_freetype_args --cflags`
@@ -797,15 +785,11 @@ AC_ARG_ENABLE(
 	[ac_lib_sdl=auto]
 )
 if test $ac_lib_sdl = auto; then
-	AC_PATH_PROGS(
-		[ac_lib_sdl_config],
-		[${ac_tool_prefix}sdl-config],
-		[],
-		[${ac_lib_sdl_path}]
-	)
-	if test -z $ac_lib_sdl_config; then
-		ac_lib_sdl=no
-	else
+	PKG_CHECK_MODULES([SDL], [sdl >= 1.2], [ac_lib_sdl=yes], [ac_lib_sdl=no])
+
+	if test $ac_lib_sdl = no ; then
+		AC_MSG_ERROR([libSDL is missing])
+		
 		ac_save_CFLAGS="$CFLAGS"
 		ac_save_LIBS="$LIBS"
 		SDLCFLAGS=`$ac_lib_sdl_config $ac_lib_sdl_args --cflags`
@@ -828,14 +812,10 @@ if test $ac_lib_sdl = auto; then
 		LIBS="$ac_save_LIBS"
 	fi
 elif test $ac_lib_sdl = yes; then
-	AC_PATH_PROGS(
-		[ac_lib_sdl_config],
-		[${ac_tool_prefix}sdl-config],
-		[],
-		[${ac_lib_sdl_path}]
-	)
-	if test -z $ac_lib_sdl_config ; then
-		AC_MSG_ERROR([the ${ac_tool_prefix}sdl-config tool is missing])
+	PKG_CHECK_MODULES([SDL], [sdl >= 1.2], [ac_lib_sdl=yes], [ac_lib_sdl=no])
+
+	if test $ac_lib_sdl = no ; then
+		AC_MSG_ERROR([libsdl is missing])
 	else
 		ac_save_CFLAGS="$CFLAGS"
 		ac_save_LIBS="$LIBS"
